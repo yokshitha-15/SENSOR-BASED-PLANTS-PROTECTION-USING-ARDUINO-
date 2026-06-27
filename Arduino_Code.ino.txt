@@ -1,0 +1,53 @@
+#include <Servo.h> 
+int rain_sensor = 7;  
+int light_sensor = 6;  
+int servo1 = 9; 
+int servo2 = 11; 
+Servo myServo1; 
+Servo myServo2; 
+void setup() { 
+// Set up sensor pins asinput  
+pinMode(rain_sensor,INPUT); 
+pinMode(light_sensor, INPUT); 
+Serial.begin(9600); 
+// Attach servos to pins and set initial position  
+myServo1.attach(servo1);  
+myServo2.attach(servo2); 
+myServo1.write(0); myServo2.write(0); 
+} 
+void loop() { // Read sensor values  
+int sensorvalue1 = digitalRead(rain_sensor); 
+Serial.println("rain sensor"); 
+Serial.println(sensorvalue1); 
+int sensorvalue2 = digitalRead(light_sensor); 
+Serial.println("light sensor"); 
+Serial.println(sensorvalue2); 
+if ((sensorvalue1 == 0)&&(sensorvalue2 == 0)) { 
+// Rotate both servos to 180 degrees if rain sensor is triggered  
+myServo1.write(180); 
+myServo2.write(180);
+Serial.println("Servos are on"); 
+delay(500); 
+}  
+else if ((sensorvalue1 == 0)&&(sensorvalue2 == 1)) { 
+// Rotate both servos to 180 degrees if rain sensor is triggered  
+myServo1.write(180); 
+myServo2.write(180); 
+Serial.println("Servos are on"); 
+delay(500); 
+} 
+else if ((sensorvalue1 == 1)&&(sensorvalue2 == 1)) { 
+// Rotate both servos to 180 degrees if rain sensor is triggered  
+myServo1.write(180); 
+myServo2.write(180); 
+Serial.println("Servos are on"); 
+delay(500); 
+} 
+else  { 
+// Reset servos to 0 degrees if light sensor is triggered  
+myServo1.write(0); 
+myServo2.write(0); 
+Serial.println("Servos are off"); 
+delay(500); 
+} 
+}
